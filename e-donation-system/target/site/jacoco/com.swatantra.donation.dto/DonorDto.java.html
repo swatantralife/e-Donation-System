@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DonorDto.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">e-donation-system</a> &gt; <a href="index.source.html" class="el_package">com.swatantra.donation.dto</a> &gt; <span class="el_source">DonorDto.java</span></div><h1>DonorDto.java</h1><pre class="source lang-java linenums">package com.swatantra.donation.dto;
+
+import java.util.Objects;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+
+<span class="fc" id="L13">public class DonorDto {</span>
+
+	private Long donarId;
+	
+	@NotNull
+	private Long ngoId;
+
+	@NotBlank
+	@Length(min = 5, max = 30)
+	private String donarName;
+
+	@NotBlank
+	@Length(min = 5, max = 30)
+	private String userName;
+
+	@NotBlank
+	@Length(min = 3, max = 25)
+	private String password;
+
+	@NotBlank
+	@Email
+	private String email;
+
+	@NotNull
+	@Min(value = 1000000000L)
+	@Max(value = 9999999999L)
+	private Long phoneNumber;
+
+	@NotBlank
+	@Length(min = 5, max = 100)
+	private String address;
+
+	public Long getDonarId() {
+<span class="fc" id="L46">		return donarId;</span>
+	}
+
+	public void setDonarId(Long donarId) {
+<span class="fc" id="L50">		this.donarId = donarId;</span>
+<span class="fc" id="L51">	}</span>
+
+	public String getDonarName() {
+<span class="fc" id="L54">		return donarName;</span>
+	}
+
+	public void setDonarName(String donarName) {
+<span class="fc" id="L58">		this.donarName = donarName;</span>
+<span class="fc" id="L59">	}</span>
+
+	public String getUserName() {
+<span class="fc" id="L62">		return userName;</span>
+	}
+
+	public void setUserName(String userName) {
+<span class="fc" id="L66">		this.userName = userName;</span>
+<span class="fc" id="L67">	}</span>
+
+	public String getPassword() {
+<span class="fc" id="L70">		return password;</span>
+	}
+
+	public void setPassword(String password) {
+<span class="fc" id="L74">		this.password = password;</span>
+<span class="fc" id="L75">	}</span>
+
+	public String getEmail() {
+<span class="fc" id="L78">		return email;</span>
+	}
+
+	public void setEmail(String email) {
+<span class="fc" id="L82">		this.email = email;</span>
+<span class="fc" id="L83">	}</span>
+
+	public String getAddress() {
+<span class="fc" id="L86">		return address;</span>
+	}
+
+	public void setAddress(String address) {
+<span class="fc" id="L90">		this.address = address;</span>
+<span class="fc" id="L91">	}</span>
+
+	public Long getPhoneNumber() {
+<span class="fc" id="L94">		return phoneNumber;</span>
+	}
+
+	public void setPhoneNumber(Long phoneNumber) {
+<span class="fc" id="L98">		this.phoneNumber = phoneNumber;</span>
+<span class="fc" id="L99">	}</span>
+
+	public Long getNgoId() {
+<span class="fc" id="L102">		return ngoId;</span>
+	}
+
+	public void setNgoId(Long ngoId) {
+<span class="fc" id="L106">		this.ngoId = ngoId;</span>
+<span class="fc" id="L107">	}</span>
+
+	@Override
+	public int hashCode() {
+<span class="nc" id="L111">		return Objects.hash(address, donarId, donarName, email, ngoId, password, phoneNumber, userName);</span>
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="fc bfc" id="L116" title="All 2 branches covered.">		if (this == obj)</span>
+<span class="fc" id="L117">			return true;</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (obj == null)</span>
+<span class="nc" id="L119">			return false;</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (getClass() != obj.getClass())</span>
+<span class="nc" id="L121">			return false;</span>
+<span class="fc" id="L122">		DonorDto other = (DonorDto) obj;</span>
+<span class="pc bpc" id="L123" title="2 of 4 branches missed.">		return Objects.equals(address, other.address) &amp;&amp; Objects.equals(donarId, other.donarId)</span>
+<span class="pc bpc" id="L124" title="2 of 4 branches missed.">				&amp;&amp; Objects.equals(donarName, other.donarName) &amp;&amp; Objects.equals(email, other.email)</span>
+<span class="pc bpc" id="L125" title="2 of 4 branches missed.">				&amp;&amp; Objects.equals(ngoId, other.ngoId) &amp;&amp; Objects.equals(password, other.password)</span>
+<span class="pc bpc" id="L126" title="2 of 4 branches missed.">				&amp;&amp; Objects.equals(phoneNumber, other.phoneNumber) &amp;&amp; Objects.equals(userName, other.userName);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

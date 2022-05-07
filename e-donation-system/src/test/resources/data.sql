@@ -1,0 +1,3 @@
+insert into donor (ngo_Id,donar_Name,user_Name,password,email,phone_Number,address) values (1,'DefaultDonor','abcde','qwerty','abc@def.com',1234567890,'hyderabad');
+insert into ngo (ngo_Name,user_Name,password,phone_Number,address,established_Date) values ('DefaultNgo','abcde','qwert',1234567890,'hyderabad','2021-12-01');
+insert into donation (donor_Id,ngo_Id,donation_Type,amount,donation_Date) values (1,1,'charity',200.0,CURRENT_DATE);

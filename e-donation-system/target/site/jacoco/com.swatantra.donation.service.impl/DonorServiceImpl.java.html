@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DonorServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">e-donation-system</a> &gt; <a href="index.source.html" class="el_package">com.swatantra.donation.service.impl</a> &gt; <span class="el_source">DonorServiceImpl.java</span></div><h1>DonorServiceImpl.java</h1><pre class="source lang-java linenums">package com.swatantra.donation.service.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.swatantra.donation.dto.DonorDto;
+import com.swatantra.donation.entity.DonorEntity;
+import com.swatantra.donation.exceptions.DonorNotFoundException;
+import com.swatantra.donation.repository.DonorRepository;
+import com.swatantra.donation.service.DonorService;
+import com.swatantra.donation.service.NgoService;
+
+@Service(value = &quot;donorService&quot;)
+<span class="fc" id="L21">public class DonorServiceImpl implements DonorService {</span>
+	
+<span class="fc" id="L23">	private static final Logger LOGGER = LoggerFactory.getLogger(DonorServiceImpl.class);</span>
+	
+	@Autowired
+	private DonorRepository donorRepository;
+	
+	@Autowired
+	private NgoService ngoService;
+	
+	@Override
+	public DonorDto registerDonor(DonorDto donorDto) {
+<span class="fc" id="L33">		ngoService.findById(donorDto.getNgoId());</span>
+<span class="fc" id="L34">		DonorEntity donorEntity = new DonorEntity();</span>
+<span class="fc" id="L35">		BeanUtils.copyProperties(donorDto, donorEntity);</span>
+<span class="fc" id="L36">		donorEntity = donorRepository.save(donorEntity);</span>
+<span class="fc" id="L37">		donorDto.setDonarId(donorEntity.getDonarId());</span>
+<span class="fc" id="L38">		LOGGER.info(&quot;Donor Saved&quot;);</span>
+<span class="fc" id="L39">		return donorDto;</span>
+	}
+	
+	@Override
+	public DonorDto updateDonor(DonorDto donorDto) {
+<span class="fc" id="L44">		findDonorById(donorDto.getDonarId());</span>
+<span class="fc" id="L45">		ngoService.findById(donorDto.getNgoId());</span>
+<span class="fc" id="L46">		DonorEntity donorEntity = new DonorEntity();</span>
+<span class="fc" id="L47">		BeanUtils.copyProperties(donorDto, donorEntity);</span>
+<span class="fc" id="L48">		donorEntity = donorRepository.save(donorEntity);</span>
+<span class="fc" id="L49">		donorDto.setDonarId(donorEntity.getDonarId());</span>
+<span class="fc" id="L50">		LOGGER.info(&quot;Donor Saved&quot;);</span>
+<span class="fc" id="L51">		return donorDto;</span>
+	}
+	
+	@Override
+	public List&lt;DonorDto&gt; findAll() {
+<span class="fc" id="L56">		List&lt;DonorEntity&gt; donorEntityList = donorRepository.findAll();</span>
+		
+<span class="fc" id="L58">		List&lt;DonorDto&gt; donorDtoList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">		for(DonorEntity entity : donorEntityList) {</span>
+<span class="fc" id="L60">			DonorDto dto = new DonorDto();</span>
+<span class="fc" id="L61">			BeanUtils.copyProperties(entity, dto);</span>
+<span class="fc" id="L62">			donorDtoList.add(dto);</span>
+<span class="fc" id="L63">		}</span>
+		
+<span class="fc" id="L65">		return donorDtoList;</span>
+	}
+
+	@Override
+	public List&lt;DonorDto&gt; getDonorsWithNgoId(Long ngoId) {
+<span class="fc" id="L70">		List&lt;DonorEntity&gt; donorEntityList = donorRepository.findByNgoId(ngoId);</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		if(donorEntityList.isEmpty()) {</span>
+<span class="fc" id="L72">			LOGGER.error(&quot;No Donors found for NgoId : {}&quot;, ngoId);</span>
+<span class="fc" id="L73">			throw new DonorNotFoundException(&quot;No Donors found for queried NgoId&quot;);</span>
+		}
+<span class="fc" id="L75">		List&lt;DonorDto&gt; donorDtoList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		for(DonorEntity entity : donorEntityList) {</span>
+<span class="fc" id="L77">			DonorDto dto = new DonorDto();</span>
+<span class="fc" id="L78">			BeanUtils.copyProperties(entity, dto);</span>
+<span class="fc" id="L79">			donorDtoList.add(dto);</span>
+<span class="fc" id="L80">		}</span>
+		
+<span class="fc" id="L82">		return donorDtoList;</span>
+	}
+
+	@Override
+	public DonorDto findDonorById(Long donorId) {
+<span class="fc" id="L87">		Optional&lt;DonorEntity&gt; donorEntity = donorRepository.findById(donorId);</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		if(donorEntity.isPresent()) {</span>
+<span class="fc" id="L89">			DonorDto donorDto = new DonorDto();</span>
+<span class="fc" id="L90">			BeanUtils.copyProperties(donorEntity.get(), donorDto);</span>
+<span class="fc" id="L91">			LOGGER.info(&quot;Donor found for DonorID : {}&quot; , donorId);</span>
+<span class="fc" id="L92">			return donorDto;</span>
+		}else {
+<span class="fc" id="L94">			LOGGER.error(&quot;Donor does not exist for DonorId : {} &quot;, donorId);</span>
+<span class="fc" id="L95">			throw new DonorNotFoundException(&quot;Donor does not exists for given DonorId&quot;);</span>
+		}
+	}
+
+	
+	
+	
+	
+	
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

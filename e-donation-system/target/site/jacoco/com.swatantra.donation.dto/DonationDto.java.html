@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DonationDto.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">e-donation-system</a> &gt; <a href="index.source.html" class="el_package">com.swatantra.donation.dto</a> &gt; <span class="el_source">DonationDto.java</span></div><h1>DonationDto.java</h1><pre class="source lang-java linenums">package com.swatantra.donation.dto;
+
+import java.time.LocalDate;
+
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Positive;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+
+<span class="fc" id="L19">public class DonationDto {</span>
+
+	private Long donationId;
+
+	@NotNull
+	private Long donorId;
+
+	@NotNull
+	private Long ngoId;
+
+	@NotBlank
+	@Length(min = 5, max = 100)
+	private String donationType;
+
+	@NotNull
+	@Positive(message = &quot;Donation should be a positive amount&quot;)
+	private Double amount;
+
+	@NotNull
+	@PastOrPresent
+	@FutureOrPresent
+	@JsonFormat(pattern = &quot;yyyy-MM-dd&quot;)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	private LocalDate donationDate;
+
+	public Long getDonationId() {
+<span class="fc" id="L46">		return donationId;</span>
+	}
+
+	public void setDonationId(Long donationId) {
+<span class="fc" id="L50">		this.donationId = donationId;</span>
+<span class="fc" id="L51">	}</span>
+
+	public Long getDonorId() {
+<span class="fc" id="L54">		return donorId;</span>
+	}
+
+	public void setDonorId(Long donorId) {
+<span class="fc" id="L58">		this.donorId = donorId;</span>
+<span class="fc" id="L59">	}</span>
+
+	public Long getNgoId() {
+<span class="fc" id="L62">		return ngoId;</span>
+	}
+
+	public void setNgoId(Long ngoId) {
+<span class="fc" id="L66">		this.ngoId = ngoId;</span>
+<span class="fc" id="L67">	}</span>
+
+	public String getDonationType() {
+<span class="fc" id="L70">		return donationType;</span>
+	}
+
+	public void setDonationType(String donationType) {
+<span class="fc" id="L74">		this.donationType = donationType;</span>
+<span class="fc" id="L75">	}</span>
+
+	public Double getAmount() {
+<span class="fc" id="L78">		return amount;</span>
+	}
+
+	public void setAmount(Double amount) {
+<span class="fc" id="L82">		this.amount = amount;</span>
+<span class="fc" id="L83">	}</span>
+
+	public LocalDate getDonationDate() {
+<span class="fc" id="L86">		return donationDate;</span>
+	}
+
+	public void setDonationDate(LocalDate donationDate) {
+<span class="fc" id="L90">		this.donationDate = donationDate;</span>
+<span class="fc" id="L91">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

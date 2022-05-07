@@ -1,0 +1,109 @@
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+    <img src="/assets/logo.gif" width="100" height="100" class="d-inline-block align-top" alt="">
+    Fetch Details
+  </a>
+</nav>
+
+<div class="container">  
+ 
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-group">
+      <div class="col-3 d-inline-block">
+        <label for="donorFormControl" >Donor</label> 
+      </div>
+      <div class="col-6 d-inline-block">
+        <select formControlName="donorFormControl"  (change)="changeDonor($event)">  
+            <option disabled>Select Donor</option>  
+            <option>Choose Donor</option>  
+            <option *ngFor="let item of donors" value={{item.donarId}}>{{item.donarName}}</option>  
+        </select> 
+      </div>
+      <div class="col-1 d-inline-block float-end">
+        <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Get</button>
+      </div>
+    </div>
+  </form> 
+
+
+  <br>
+  <br>
+
+  <form>
+    <div class="form-group row">
+      <label for="donorName" class="col-3 d-inline-block">Donor Name</label>
+      <div class="col-6 d-inline-block">
+        <input type="text" readonly class="form-control-plaintext" id="donorName" value={{resolvedDonor.donarName}} >
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="userName" class="col-3 d-inline-block">Username</label>
+      <div class="col-6 d-inline-block">
+        <input type="text" readonly class="form-control-plaintext" id="userName" value={{resolvedDonor.userName}} >
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="password" class="col-3 d-inline-block">Password</label>
+      <div class="col-6 d-inline-block">
+        <input type="text" readonly class="form-control-plaintext" id="password" value={{resolvedDonor.password}} >
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="email" class="col-3 d-inline-block">Email</label>
+      <div class="col-6 d-inline-block">
+        <input type="text" readonly class="form-control-plaintext" id="email" value={{resolvedDonor.email}} >
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="phoneNumber" class="col-3 d-inline-block">Phone Number</label>
+      <div class="col-6 d-inline-block">
+        <input type="text" readonly class="form-control-plaintext" id="phoneNumber" value={{resolvedDonor.phoneNumber}} >
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="address" class="col-3 d-inline-block">Address</label>
+      <div class="col-6 d-inline-block">
+        <input type="text" readonly class="form-control-plaintext" id="address" value={{resolvedDonor.address}} >
+      </div>
+    </div>
+  </form>
+
+  <div class="container">
+    <div class="row">
+      <div class="col col-lg text-center">
+        <h5>Donations</h5>
+      </div>
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Donor Id</th>
+        <th scope="col">NGO Id</th>
+        <th scope="col">Donation Type</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Date(yyyy-MM-dd)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of donations">
+        <th>{{ item.donorId }}</th>
+        <td>{{ item.ngoId }}</td>
+        <td>{{ item.donationType }}</td>
+        <td>{{ item.amount }}</td>
+        <td>{{ item.donationDate }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+</div>  
+
+
+

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DonationController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">e-donation-system</a> &gt; <a href="index.source.html" class="el_package">com.swatantra.donation.controller</a> &gt; <span class="el_source">DonationController.java</span></div><h1>DonationController.java</h1><pre class="source lang-java linenums">package com.swatantra.donation.controller;
+
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.swatantra.donation.dto.DonationDto;
+import com.swatantra.donation.dto.DonorDto;
+import com.swatantra.donation.dto.NgoDto;
+import com.swatantra.donation.exceptions.DonorNotFoundException;
+import com.swatantra.donation.exceptions.InvalidDataException;
+import com.swatantra.donation.exceptions.NgoNotFoundException;
+import com.swatantra.donation.service.DonationService;
+import com.swatantra.donation.service.DonorService;
+import com.swatantra.donation.service.NgoService;
+
+@RestController
+<span class="fc" id="L31">public class DonationController {</span>
+
+<span class="fc" id="L33">	private static final Logger LOGGER = LoggerFactory.getLogger(DonationController.class);</span>
+	
+	@Autowired
+	private DonorService donorService;
+	
+	@Autowired
+	private NgoService ngoService;
+	
+	@Autowired
+	private DonationService donationService;
+	
+	@PostMapping(&quot;/donors/register-donor&quot;)
+	public ResponseEntity&lt;DonorDto&gt; registerDonor(@Valid @RequestBody DonorDto donorDto, BindingResult result){
+<span class="fc bfc" id="L46" title="All 2 branches covered.">		if(result.hasErrors()) {</span>
+<span class="fc" id="L47">			LOGGER.error(&quot;Error while registering donor : {} &quot;,result.getAllErrors());</span>
+<span class="fc" id="L48">			throw new InvalidDataException(&quot;Invalid Request parameters for donor regsitration&quot;);</span>
+		}
+		try {
+<span class="fc" id="L51">			donorService.registerDonor(donorDto);</span>
+<span class="fc" id="L52">			return ResponseEntity.ok(donorDto);</span>
+<span class="fc" id="L53">		}catch(NgoNotFoundException e) {</span>
+<span class="fc" id="L54">			LOGGER.error(e.getMessage());</span>
+<span class="fc" id="L55">			throw new NgoNotFoundException(&quot;Ngo does not exists with given NgoId&quot;) ;</span>
+		}
+		
+	}
+	
+	@PutMapping(&quot;/donors/update-donor&quot;)
+	public ResponseEntity&lt;DonorDto&gt; updateDonor(@Valid @RequestBody DonorDto donorDto, BindingResult result){
+<span class="fc bfc" id="L62" title="All 2 branches covered.">		if(result.hasErrors()) {</span>
+<span class="fc" id="L63">			LOGGER.error(&quot;Error while registering donor : {} &quot;,result.getAllErrors());</span>
+<span class="fc" id="L64">			throw new InvalidDataException(&quot;Invalid Request parameters for donor regsitration&quot;);</span>
+		}
+		try {
+<span class="fc" id="L67">			donorService.updateDonor(donorDto);</span>
+<span class="fc" id="L68">			return ResponseEntity.ok(donorDto);</span>
+<span class="fc" id="L69">		}catch(DonorNotFoundException e) {</span>
+<span class="fc" id="L70">			LOGGER.error(&quot;Donor does not exists with given donorId&quot;);</span>
+<span class="fc" id="L71">			throw new DonorNotFoundException(&quot;Donor does not exists with given donorId&quot;) ;</span>
+<span class="fc" id="L72">		}catch(NgoNotFoundException e) {</span>
+<span class="fc" id="L73">			LOGGER.error(e.getMessage());</span>
+<span class="fc" id="L74">			throw new NgoNotFoundException(&quot;Ngo does not exists with given NgoId&quot;) ;</span>
+		}
+		
+	}
+	
+	@CrossOrigin(origins = &quot;http://localhost:4200&quot;)
+	@GetMapping(&quot;/donors/by-donor-id/{donorId}&quot;)
+	public ResponseEntity&lt;DonorDto&gt; getDonorById(@PathVariable Long donorId){
+<span class="fc" id="L82">		DonorDto dto = donorService.findDonorById(donorId);</span>
+<span class="fc" id="L83">		return ResponseEntity.ok(dto);</span>
+	}
+	
+	@CrossOrigin(origins = &quot;http://localhost:4200&quot;)
+	@GetMapping(&quot;/donors/findAll&quot;)
+	public ResponseEntity&lt;List&lt;DonorDto&gt;&gt; getDonorsList(){
+<span class="fc" id="L89">		List&lt;DonorDto&gt; donorList = donorService.findAll();</span>
+<span class="fc" id="L90">		return ResponseEntity.ok(donorList);</span>
+	}
+	
+	
+	
+	@PostMapping(&quot;/donors/register-ngo&quot;)
+	public ResponseEntity&lt;NgoDto&gt; registerNgo(@Valid @RequestBody NgoDto ngoDto, BindingResult result){
+<span class="fc bfc" id="L97" title="All 2 branches covered.">		if(result.hasErrors()) {</span>
+<span class="fc" id="L98">			LOGGER.error(&quot;Error while registering ngo : {} &quot;,result.getAllErrors());</span>
+<span class="fc" id="L99">			throw new InvalidDataException(&quot;Invalid Request parameters for Ngo regsitration&quot;);</span>
+		}
+<span class="fc" id="L101">		ngoService.registerNgo(ngoDto);</span>
+<span class="fc" id="L102">		return ResponseEntity.ok(ngoDto);</span>
+	}
+	
+	@GetMapping(&quot;/donors/by-ngo-id/{ngoId}&quot;)
+	public ResponseEntity&lt;List&lt;DonorDto&gt;&gt; getDonorsByNgoId(@PathVariable Long ngoId){
+<span class="fc" id="L107">		List&lt;DonorDto&gt; donorList = donorService.getDonorsWithNgoId(ngoId);</span>
+<span class="fc" id="L108">		LOGGER.info(&quot;Total Number of Donors Retrieved for NgoId {} = {}&quot;,ngoId,donorList.size());</span>
+<span class="fc" id="L109">		return ResponseEntity.ok(donorList);</span>
+	}
+	
+	@PostMapping(&quot;/donation/add-donation&quot;)
+	public ResponseEntity&lt;DonationDto&gt; addDonation(@Valid @RequestBody DonationDto donationDto, BindingResult result){
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		if(result.hasErrors()) {</span>
+<span class="fc" id="L115">			LOGGER.error(&quot;Error while adding donation : {} &quot;,result.getAllErrors());</span>
+<span class="fc" id="L116">			throw new InvalidDataException(&quot;Invalid Request parameters for add Donation &quot;);</span>
+		}
+<span class="fc" id="L118">		donationService.addDonation(donationDto);</span>
+<span class="fc" id="L119">		return ResponseEntity.ok(donationDto);</span>
+	}
+	
+	@CrossOrigin(origins = &quot;http://localhost:4200&quot;)
+	@GetMapping(&quot;/donations/by-id/{donorId}&quot;)
+	public ResponseEntity&lt;List&lt;DonationDto&gt;&gt; getDonationsByDonorId(@PathVariable Long donorId){
+<span class="fc" id="L125">		List&lt;DonationDto&gt; donationList = donationService.finddonationsByDonorId(donorId);</span>
+<span class="fc" id="L126">		LOGGER.info(&quot;Total Number of Donations Retrieved for donorId {} = {}&quot;,donorId,donationList.size());</span>
+<span class="fc" id="L127">		return ResponseEntity.ok(donationList);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

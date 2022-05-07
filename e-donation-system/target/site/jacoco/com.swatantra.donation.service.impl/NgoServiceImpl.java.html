@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NgoServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">e-donation-system</a> &gt; <a href="index.source.html" class="el_package">com.swatantra.donation.service.impl</a> &gt; <span class="el_source">NgoServiceImpl.java</span></div><h1>NgoServiceImpl.java</h1><pre class="source lang-java linenums">package com.swatantra.donation.service.impl;
+
+import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.swatantra.donation.dto.NgoDto;
+import com.swatantra.donation.entity.NgoEntity;
+import com.swatantra.donation.exceptions.NgoNotFoundException;
+import com.swatantra.donation.repository.NgoRepository;
+import com.swatantra.donation.service.NgoService;
+
+@Service(value = &quot;ngoService&quot;)
+<span class="fc" id="L18">public class NgoServiceImpl implements NgoService {</span>
+
+<span class="fc" id="L20">	private static final Logger LOGGER = LoggerFactory.getLogger(NgoServiceImpl.class);</span>
+
+	@Autowired
+	private NgoRepository ngorepository;
+
+	@Override
+	public NgoDto registerNgo(NgoDto ngoDto) {
+<span class="fc" id="L27">		NgoEntity ngoEntity = new NgoEntity();</span>
+<span class="fc" id="L28">		BeanUtils.copyProperties(ngoDto, ngoEntity);</span>
+<span class="fc" id="L29">		ngoEntity = ngorepository.save(ngoEntity);</span>
+<span class="fc" id="L30">		ngoDto.setNgoId(ngoEntity.getNgoId());</span>
+<span class="fc" id="L31">		LOGGER.info(&quot;Ngo Saved&quot;);</span>
+<span class="fc" id="L32">		return ngoDto;</span>
+		
+	}
+
+	@Override
+	public NgoDto findById(Long ngoId) {
+<span class="fc" id="L38">		Optional&lt;NgoEntity&gt; ngoEntity = ngorepository.findById(ngoId);</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">		if(ngoEntity.isPresent()) {</span>
+<span class="fc" id="L40">			NgoDto ngoDto = new NgoDto();</span>
+<span class="fc" id="L41">			BeanUtils.copyProperties(ngoEntity.get(), ngoDto);</span>
+<span class="fc" id="L42">			LOGGER.info(&quot;NGO found for NgoId : {}&quot; , ngoId);</span>
+<span class="fc" id="L43">			return ngoDto;</span>
+		}else {
+<span class="fc" id="L45">			LOGGER.error(&quot;NGO does not exist for NgoId : {} &quot;, ngoId);</span>
+<span class="fc" id="L46">			throw new NgoNotFoundException(&quot;NGO does not exists for given NgoId&quot;);</span>
+		}
+	}
+	
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

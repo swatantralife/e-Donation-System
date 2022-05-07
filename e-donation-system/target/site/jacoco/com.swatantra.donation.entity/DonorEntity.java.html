@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DonorEntity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">e-donation-system</a> &gt; <a href="index.source.html" class="el_package">com.swatantra.donation.entity</a> &gt; <span class="el_source">DonorEntity.java</span></div><h1>DonorEntity.java</h1><pre class="source lang-java linenums">package com.swatantra.donation.entity;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = &quot;donor&quot;)
+<span class="fc" id="L11">public class DonorEntity {</span>
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long donarId;
+	private Long ngoId;
+	private String donarName;
+	private String userName;
+	private String password;
+	private String email;
+	private Long phoneNumber;
+	private String address;
+
+	public Long getDonarId() {
+<span class="fc" id="L25">		return donarId;</span>
+	}
+
+	public void setDonarId(Long donarId) {
+<span class="fc" id="L29">		this.donarId = donarId;</span>
+<span class="fc" id="L30">	}</span>
+
+	public Long getNgoId() {
+<span class="fc" id="L33">		return ngoId;</span>
+	}
+
+	public void setNgoId(Long ngoId) {
+<span class="fc" id="L37">		this.ngoId = ngoId;</span>
+<span class="fc" id="L38">	}</span>
+
+	public String getDonarName() {
+<span class="fc" id="L41">		return donarName;</span>
+	}
+
+	public void setDonarName(String donarName) {
+<span class="fc" id="L45">		this.donarName = donarName;</span>
+<span class="fc" id="L46">	}</span>
+
+	public String getUserName() {
+<span class="fc" id="L49">		return userName;</span>
+	}
+
+	public void setUserName(String userName) {
+<span class="fc" id="L53">		this.userName = userName;</span>
+<span class="fc" id="L54">	}</span>
+
+	public String getPassword() {
+<span class="fc" id="L57">		return password;</span>
+	}
+
+	public void setPassword(String password) {
+<span class="fc" id="L61">		this.password = password;</span>
+<span class="fc" id="L62">	}</span>
+
+	public String getEmail() {
+<span class="fc" id="L65">		return email;</span>
+	}
+
+	public void setEmail(String email) {
+<span class="fc" id="L69">		this.email = email;</span>
+<span class="fc" id="L70">	}</span>
+
+	public Long getPhoneNumber() {
+<span class="fc" id="L73">		return phoneNumber;</span>
+	}
+
+	public void setPhoneNumber(Long phoneNumber) {
+<span class="fc" id="L77">		this.phoneNumber = phoneNumber;</span>
+<span class="fc" id="L78">	}</span>
+
+	public String getAddress() {
+<span class="fc" id="L81">		return address;</span>
+	}
+
+	public void setAddress(String address) {
+<span class="fc" id="L85">		this.address = address;</span>
+<span class="fc" id="L86">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

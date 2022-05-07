@@ -1,0 +1,32 @@
+<form>
+    <div class="form-group">
+      <div class="col-7 d-inline-block">
+        <input type="text" class="form-control inline" placeholder="City">
+      </div>
+      <div class="col d-inline-block">
+        <input type="text" class="form-control inline" placeholder="State">
+      </div>
+      <div class="col d-inline-block">
+        <input type="text" class="form-control inline" placeholder="Zip">
+      </div>
+    </div>
+  </form>
+
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-group">
+      <div class="col-1 d-inline-block">
+        <label for="donorFormControl" >Donor</label> 
+      </div>
+      <div class="col-6 d-inline-block">
+        <select formControlName="donorFormControl"  (change)="changeDonor($event)">  
+            <option disabled>Select Donor</option>  
+            <option>Choose Donor</option>  
+            <option *ngFor="let item of donors" value={{item.donarId}}>{{item.donarName}}</option>  
+        </select> 
+      </div>
+      <div class="col d-inline-block">
+        <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Get</button>
+      </div>
+    </div>
+  </form>

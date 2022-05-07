@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DonationServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">e-donation-system</a> &gt; <a href="index.source.html" class="el_package">com.swatantra.donation.service.impl</a> &gt; <span class="el_source">DonationServiceImpl.java</span></div><h1>DonationServiceImpl.java</h1><pre class="source lang-java linenums">package com.swatantra.donation.service.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.swatantra.donation.dto.DonationDto;
+import com.swatantra.donation.entity.DonationEntity;
+import com.swatantra.donation.repository.DonationRepository;
+import com.swatantra.donation.service.DonationService;
+
+@Service(value = &quot;donationService&quot;)
+<span class="fc" id="L18">public class DonationServiceImpl implements DonationService {</span>
+	
+<span class="fc" id="L20">	private static final Logger LOGGER = LoggerFactory.getLogger(DonationServiceImpl.class);</span>
+	
+	
+	@Autowired
+	private DonationRepository donationRepository;
+
+	@Override
+	public DonationDto addDonation(DonationDto donationDto) {
+<span class="fc" id="L28">		DonationEntity entity = new DonationEntity(); </span>
+<span class="fc" id="L29">		BeanUtils.copyProperties(donationDto, entity);</span>
+<span class="fc" id="L30">		entity = donationRepository.save(entity);</span>
+<span class="fc" id="L31">		donationDto.setDonationId(entity.getDonationId());</span>
+<span class="fc" id="L32">		LOGGER.info(&quot;Donation Saved&quot;);</span>
+<span class="fc" id="L33">		return donationDto;</span>
+	}
+
+	@Override
+	public List&lt;DonationDto&gt; finddonationsByDonorId(Long donorId) {
+<span class="fc" id="L38">		List&lt;DonationEntity&gt; donationEntityList = donationRepository.findByDonorId(donorId);</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">		if(donationEntityList.isEmpty()) {</span>
+<span class="fc" id="L40">			LOGGER.error(&quot;No Donations found for DonorId : {}&quot;, donorId);</span>
+		}
+<span class="fc" id="L42">		List&lt;DonationDto&gt; donationDtoList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">		for(DonationEntity entity : donationEntityList) {</span>
+<span class="fc" id="L44">			DonationDto dto = new DonationDto();</span>
+<span class="fc" id="L45">			BeanUtils.copyProperties(entity, dto);</span>
+<span class="fc" id="L46">			donationDtoList.add(dto);</span>
+<span class="fc" id="L47">		}</span>
+		
+<span class="fc" id="L49">		return donationDtoList;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

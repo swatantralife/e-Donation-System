@@ -1,0 +1,7 @@
+com\swatantra\donation\testutility\MasterData.class
+com\swatantra\donation\controller\NgoTest.class
+com\swatantra\donation\controller\DonationTest.class
+com\swatantra\donation\service\DonorServiceImplTest.class
+com\swatantra\donation\service\NgoServiceImplTest.class
+com\swatantra\donation\controller\DonorTest.class
+com\swatantra\donation\service\DonationServiceImplTest.class

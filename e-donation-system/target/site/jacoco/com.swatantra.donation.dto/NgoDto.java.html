@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NgoDto.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">e-donation-system</a> &gt; <a href="index.source.html" class="el_package">com.swatantra.donation.dto</a> &gt; <span class="el_source">NgoDto.java</span></div><h1>NgoDto.java</h1><pre class="source lang-java linenums">package com.swatantra.donation.dto;
+
+import java.time.LocalDate;
+import java.util.Objects;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+
+<span class="fc" id="L20">public class NgoDto {</span>
+
+	private Long ngoId;
+
+	@NotBlank
+	@Length(min = 5, max = 30)
+	private String ngoName;
+
+	@NotBlank
+	@Length(min = 5, max = 30)
+	private String userName;
+
+	@NotBlank
+	@Length(min = 3, max = 25)
+	private String password;
+
+	@NotNull
+	@Min(value = 1000000000L)
+	@Max(value = 9999999999L)
+	private Long phoneNumber;
+
+	@NotBlank
+	@Length(min = 5, max = 100)
+	private String address;
+
+	@NotNull
+	@Past
+	@JsonFormat(pattern = &quot;yyyy-MM-dd&quot;)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	private LocalDate establishedDate;
+
+	public Long getNgoId() {
+<span class="fc" id="L53">		return ngoId;</span>
+	}
+
+	public void setNgoId(Long ngoId) {
+<span class="fc" id="L57">		this.ngoId = ngoId;</span>
+<span class="fc" id="L58">	}</span>
+
+	public String getNgoName() {
+<span class="fc" id="L61">		return ngoName;</span>
+	}
+
+	public void setNgoName(String ngoName) {
+<span class="fc" id="L65">		this.ngoName = ngoName;</span>
+<span class="fc" id="L66">	}</span>
+
+	public String getUserName() {
+<span class="fc" id="L69">		return userName;</span>
+	}
+
+	public void setUserName(String userName) {
+<span class="fc" id="L73">		this.userName = userName;</span>
+<span class="fc" id="L74">	}</span>
+
+	public String getPassword() {
+<span class="fc" id="L77">		return password;</span>
+	}
+
+	public void setPassword(String password) {
+<span class="fc" id="L81">		this.password = password;</span>
+<span class="fc" id="L82">	}</span>
+
+	public Long getPhoneNumber() {
+<span class="fc" id="L85">		return phoneNumber;</span>
+	}
+
+	public void setPhoneNumber(Long phoneNumber) {
+<span class="fc" id="L89">		this.phoneNumber = phoneNumber;</span>
+<span class="fc" id="L90">	}</span>
+
+	public String getAddress() {
+<span class="fc" id="L93">		return address;</span>
+	}
+
+	public void setAddress(String address) {
+<span class="fc" id="L97">		this.address = address;</span>
+<span class="fc" id="L98">	}</span>
+
+	public LocalDate getEstablishedDate() {
+<span class="fc" id="L101">		return establishedDate;</span>
+	}
+
+	public void setEstablishedDate(LocalDate establishedDate) {
+<span class="fc" id="L105">		this.establishedDate = establishedDate;</span>
+<span class="fc" id="L106">	}</span>
+
+	@Override
+	public int hashCode() {
+<span class="nc" id="L110">		return Objects.hash(address, establishedDate, ngoId, ngoName, password, phoneNumber, userName);</span>
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		if (this == obj)</span>
+<span class="fc" id="L116">			return true;</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		if (obj == null)</span>
+<span class="nc" id="L118">			return false;</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		if (getClass() != obj.getClass())</span>
+<span class="nc" id="L120">			return false;</span>
+<span class="fc" id="L121">		NgoDto other = (NgoDto) obj;</span>
+<span class="pc bpc" id="L122" title="2 of 4 branches missed.">		return Objects.equals(address, other.address) &amp;&amp; Objects.equals(establishedDate, other.establishedDate)</span>
+<span class="pc bpc" id="L123" title="2 of 4 branches missed.">				&amp;&amp; Objects.equals(ngoId, other.ngoId) &amp;&amp; Objects.equals(ngoName, other.ngoName)</span>
+<span class="pc bpc" id="L124" title="2 of 4 branches missed.">				&amp;&amp; Objects.equals(password, other.password) &amp;&amp; Objects.equals(phoneNumber, other.phoneNumber)</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">				&amp;&amp; Objects.equals(userName, other.userName);</span>
+	}
+
+
+	
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
